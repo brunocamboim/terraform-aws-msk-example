@@ -23,10 +23,6 @@ variable "env" {
   default = "dev"
 }
 
-variable "team" {
-  default = "PlataformaA"
-}
-
 variable "kafka_instance_type" {
   default = "kafka.t3.small"
 }
