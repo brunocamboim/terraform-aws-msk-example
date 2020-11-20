@@ -17,12 +17,12 @@ data "aws_subnet" "subnets-private-main-vpc" {
   id       = each.value
 }
 
-resource "aws_cloudwatch_log_group" "msk_plataforma_kafka_brokers_logs" {
-  name = "msk_plataforma_kafka_brokers_logs"
+resource "aws_cloudwatch_log_group" "msk_kafka_brokers_logs" {
+  name = "msk_kafka_brokers_logs"
 }
 
-resource "aws_msk_cluster" "plataforma_kafka_cluster" {
-  cluster_name           = "plataforma-kafka-cluster"
+resource "aws_msk_cluster" "kafka_cluster" {
+  cluster_name           = "kafka-cluster"
   kafka_version          = "2.2.1"
   number_of_broker_nodes = 3
 
@@ -37,14 +37,14 @@ resource "aws_msk_cluster" "plataforma_kafka_cluster" {
     broker_logs {
       cloudwatch_logs {
         enabled   = true
-        log_group = aws_cloudwatch_log_group.msk_plataforma_kafka_brokers_logs.name
+        log_group = aws_cloudwatch_log_group.msk_kafka_brokers_logs.name
       }
     }
   }
 
   depends_on = [
     aws_security_group.sg-apache-kafka-cluster,
-    aws_cloudwatch_log_group.msk_plataforma_kafka_brokers_logs
+    aws_cloudwatch_log_group.msk_kafka_brokers_logs
   ]
 
   tags = {
